@@ -1,0 +1,25 @@
+const clienteController = require('../controllers/cliente');
+const cuentaController = require('../controllers/cuenta');
+const transaccionController = require('../controllers/transaccion');
+
+module.exports = (app) => {
+    app.get('/api', (_req, res) => res.status(200).send({
+        message: 'Example project did not give you access to the API web services',
+    }));
+    app.post('/api/cliente/create', clienteController.create);
+    app.get('/api/cliente/list', clienteController.list);
+    app.get('/api/cliente/find/:id', clienteController.find);
+    app.get('/api/cliente/find/:id/cuentas', clienteController.findWithCuentas);  // esta ruta obtiene el cliente y sus
+    //cuentas asociadas
+    
+    app.post('/api/cuenta/create/:id_cliente', cuentaController.create);
+    app.get('/api/cuenta/list', cuentaController.list);
+    app.get('/api/cuenta/find/:id', cuentaController.find);
+    app.patch('/api/cuenta/:id', cuentaController.update);  // Usamos PATCH para actualizaciones parciales
+
+
+    app.post('/api/transaccion/create/', transaccionController.create);
+    app.get('/api/cuenta/find/:id/transacciones', cuentaController.findWithTransacciones);
+
+
+};
